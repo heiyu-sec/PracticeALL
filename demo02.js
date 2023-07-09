@@ -1,17 +1,35 @@
 function main(){
     Java.perform(function (){
         
+        
+        //overload
         var TestThreadClass = Java.use("com.dta.demo13.TestThread")
-        TestThreadClass.add.overload('int','int').implementation = function(arg1, arg2){
+        TestThreadClass.add.overload('java.lang.String', 'java.lang.String').implementation = function(arg1, arg2){
             printStack()
-            arg1 = 2;
-            arg2 = 5;
             console.log("the first arg is ==> " + arg1)
             console.log("the second arg is ==> " + arg2)
             var result = this.add(arg1,arg2)
             console.log("the result is ==> " + result)
             return result;
         }
+        
+
+        /*
+        //param builder
+        Java.choose("com.dta.demo13.TestThread",{
+            onMatch: function(instanse){
+                //var result = instanse.add("10",Java.use("java.lang.String").$new("11"))
+                var result = instanse.add(1,5)
+                console.log("the result is ==> " + result)
+            },
+            onComplete: function(){}
+        })
+        */
+
+        // static dynamic
+        var result = Java.use("com.dta.demo13.TestThread").static_add("123","456")
+        console.log("the result is ==> " + result)
+
     })
 
     function printStack(){
